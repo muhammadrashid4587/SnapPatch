@@ -1,0 +1,262 @@
+/* ───────────────────────────────────────────── */
+/*  IMPORT FONTS: ORBITRON + EXO 2               */
+/* ───────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Exo+2:wght@300;400;600&display=swap');
+
+:root {
+  /* page colors */
+  --bg-light:    #f9fbfc;     /* white content fallback */
+  --bg-dark:     #04101f;     /* deep navy sky */
+  --card-bg:     #f0f4f8;     /* NEW: subtle off-white for cards */
+  --grid-light:  rgba(0,255,255,0.1);
+  --accent-1:    #00f3ff;
+  --accent-2:    #0077b6;
+  --shadow:      0 4px 16px rgba(0,0,0,0.1);
+  --shadow-neon: 0 0 12px rgba(0,255,255,0.5);
+}
+
+/* ── RESET & GLOBALS ── */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: var(--bg-dark);
+  font-family: 'Exo 2', sans-serif;
+  color: #333;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+/* ── SPLASH OVERLAY ── */
+.splash {
+  position: fixed; inset: 0;
+  background: radial-gradient(circle, #050a10, #0a1122);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 9999; opacity: 1; transition: opacity 0.6s ease;
+}
+.splash.fade-out {
+  opacity: 0; pointer-events: none;
+}
+
+/* GRID BACKGROUND */
+.splash-grid {
+  position: absolute; inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg,transparent,transparent 20px,var(--grid-light) 20px,var(--grid-light) 21px),
+    repeating-linear-gradient(90deg,transparent,transparent 20px,var(--grid-light) 20px,var(--grid-light) 21px);
+  animation: gridShift 10s linear infinite;
+}
+@keyframes gridShift {
+  to { background-position:150px 150px; }
+}
+
+/* SPLASH LETTERS */
+.splash-text {
+  position: relative; z-index: 1;
+  display: flex; gap: 0.5rem;
+}
+.letter {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 4rem;
+  color: var(--accent-1);
+  display: inline-block;
+}
+
+/* In your src/App.css */
+
+.app-container {
+    /* kill the navy gradient… */
+   background: linear-gradient(
+     180deg,
+     var(--bg-dark) 0%,
+     var(--bg-dark) 35%,
+     var(--bg-light) 35%,
+     var(--bg-light) 100%
+    );
+    /* …and just use your light page color */
+    background: var(--bg-light);
+    padding-top: 140px;
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+
+/* CLOUDS LAYER */
+.app-container::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: url('https://assets.codepen.io/588/clouds.png') repeat-x;
+  opacity: 0.05;
+  animation: moveClouds 60s linear infinite;
+  pointer-events: none;
+}
+@keyframes moveClouds {
+  from { background-position: 0 0; }
+  to   { background-position: -1000px 0; }
+}
+
+/* RAIN LAYER */
+.app-container::after {
+  content: "";
+  position: absolute; inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 2px 10px, 10px 2px;
+  animation: rainFall 0.5s linear infinite;
+}
+@keyframes rainFall {
+  to { background-position: -50px 100px, 100px 50px; }
+}
+
+/* ── HEADER ── */
+.app-header {
+  position: fixed; top: 0; left: 0; right: 0;
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+  color: white; text-align: center; padding: 1.5rem 0;
+  box-shadow: var(--shadow); z-index: 100;
+}
+.header-inner {
+  max-width: 900px; margin: 0 auto;
+}
+.header-inner h1 {
+  font-weight: 600; font-size: 2rem; margin-bottom: 0.25rem;
+}
+.header-inner p {
+  font-weight: 300; font-size: 1rem; opacity: 0.9;
+}
+
+/* ── STEPS ── */
+.steps {
+  margin-top: 20px;
+  max-width: 900px; margin: 20px auto 20px;
+  display: flex; justify-content: space-between; position: relative;
+  z-index: 1;
+}
+.step { flex: 1; text-align: center; }
+.circle {
+  width: 40px; height: 40px; line-height: 40px;
+  margin: 0 auto 0.5rem; border-radius: 50%;
+  background: white; color: #666;
+  box-shadow: var(--shadow); transition: all 0.3s ease;
+  font-weight: 600;
+}
+.circle.active {
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+  color: white;
+  box-shadow: var(--shadow-neon), 0 4px 16px rgba(0,0,0,0.2);
+  transform: scale(1.1);
+}
+.label {
+  font-size: 0.85rem; color: #666; transition: color 0.3s;
+}
+.label.active {
+  color: var(--accent-2);
+}
+.progress-line {
+  position: absolute; bottom: -2px; left: 0; right: 0;
+  height: 2px; background: #ddd;
+}
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+  transition: width 0.7s ease-in-out;
+}
+
+/* ── CAPTURE CARD ── */
+.capture-card {
+  position: relative; z-index: 1;
+  max-width: 720px; margin: 0 auto 3rem;
+  background: var(--card-bg);    /* <— now off-white */
+  border-radius: 8px; padding: 2rem 1.5rem;
+  box-shadow: var(--shadow); text-align: center;
+}
+.capture-card h2 {
+  font-weight: 600; font-size: 1.75rem; margin-bottom: 0.5rem;
+}
+.capture-card p {
+  font-weight: 300; color: #555; margin-bottom: 1.5rem;
+}
+
+/* ── UPLOAD AREA ── */
+.upload-area {
+  margin: 0 auto 1.5rem; max-width: 400px;
+  background: var(--bg-light);
+  padding: 1.5rem;
+  border: 2px dashed var(--accent-1); border-radius: 8px;
+  box-shadow: var(--shadow); text-align: center;
+}
+.upload-area i {
+  font-size: 2.5rem; color: var(--accent-1); margin-bottom: 0.75rem;
+}
+.upload-area p {
+  color: #777; margin: 0.5rem 0;
+}
+.upload-area .small {
+  font-size: 0.75rem; color: #999;
+}
+
+/* ── BUTTONS ── */
+.btn-row {
+  display: flex; justify-content: center; gap: 1rem;
+}
+.btn-modern {
+  flex: 1; max-width: 220px;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+  color: white; border: none; border-radius: 30px;
+  box-shadow: var(--shadow), var(--shadow-neon);
+  font-weight: 500; font-size: 1rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn-modern.btn-light {
+  background: white; color: var(--accent-2); box-shadow: var(--shadow);
+}
+.btn-modern:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-neon), 0 12px 32px rgba(0,0,0,0.2);
+}
+
+/* ── FEATURES ── */
+.features.row {
+  position: relative; z-index: 1;
+  max-width: 900px; margin: 0 auto 3rem;
+  display: flex; gap: 1rem;
+}
+.feature-card {
+  flex: 1; background: var(--card-bg); /* <— now off-white */
+  border-radius: 8px; padding: 1.5rem;
+  box-shadow: var(--shadow); text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-neon), 0 8px 24px rgba(0,0,0,0.1);
+}
+.feature-card i {
+  font-size: 2rem; color: var(--accent-1); margin-bottom: 0.5rem;
+}
+.feature-card h3 {
+  font-weight: 600; margin: 0.5rem 0; font-size: 1.25rem;
+}
+.feature-card p {
+  color: #666; font-size: 0.9rem;
+}
+
+/* ── FOOTER ── */
+.app-footer {
+  position: relative; z-index: 1;
+  background: white; padding: 2rem 0;
+  text-align: center; color: #555;
+  border-top: 1px solid #eee;
+}
+.footer-links a {
+  color: #777; margin: 0 0.5rem; font-size: 0.85rem;
+  text-decoration: none; transition: color 0.2s;
+}
+.footer-links a:hover {
+  color: var(--accent-2);
+}

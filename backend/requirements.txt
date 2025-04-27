@@ -1,0 +1,27 @@
+# Core
+fastapi==0.115.12
+uvicorn[standard]==0.18.3
+python-multipart==0.0.20
+python-dotenv==1.0.1
+httpx==0.28.1
+anyio==4.9.0
+
+# Image-I/O & mesh export
+opencv-python==4.8.0.76
+numpy==1.25.2
+trimesh==4.3.2
+
+# Auth
+python-jose[cryptography]==3.3.0
+fastapi-auth0==0.5.0
+
+# MongoDB
+motor>=3.7.0,<4.0.0
+pymongo[srv]==4.9.0
+certifi==2025.4.26
+
+# OpenAI
+openai==1.76.0
+
+# HTTP utils
+requests==2.31.0
