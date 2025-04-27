@@ -1,6 +1,20 @@
+# virtual env / caches
 venv/
 __pycache__/
 *.pyc
-.env
+
+# secrets / large artefacts
 .env
 *.tflite
+firebase-key.json
+
+# IDE
+.vscode/
+
+# Ignore local Python environment
+venv/
+
+
+# macOS garbage
+*.DS_Store
+
